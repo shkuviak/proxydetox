@@ -1,10 +1,10 @@
 use std::{
     ffi::OsString,
     fs::read_to_string,
+    net::IpAddr,
     path::{Path, PathBuf},
     str::FromStr,
     time::Duration,
-    net::IpAddr
 };
 
 use clap::{Arg, ArgAction, ArgMatches, Command};
@@ -377,7 +377,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_ip(){
+    fn test_is_ip() {
         assert!(is_ip("0.0.0.0").is_ok());
         assert!(is_ip("::1").is_ok());
         assert!(is_ip("this.is.not.ip").is_err())
@@ -420,7 +420,11 @@ mod tests {
     #[test]
     fn test_interface() {
         let addr = String::from("0.0.0.0");
-        let args = Options::parse_args(&["proxydetox".into(), "--interface".into(), addr.clone().into()]);
+        let args = Options::parse_args(&[
+            "proxydetox".into(),
+            "--interface".into(),
+            addr.clone().into(),
+        ]);
         assert_eq!(args.interface, addr.parse::<IpAddr>().unwrap());
     }
 
